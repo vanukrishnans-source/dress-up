@@ -68,13 +68,23 @@ class DressViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    /** Debug builds only (emulator tests): load an app-private file into a slot. */
+    fun pickFile(slot: String, f: File) {
+        viewModelScope.launch {
+            val bmp = withContext(Dispatchers.IO) { ImageUtils.loadFile(f, MAX_SIDE) }
+            _ui.update { if (slot == "person") it.copy(person = bmp, result = null) else it.copy(garment = bmp, result = null) }
+        }
+    }
+
     fun setKind(k: GarmentKind) = _ui.update { it.copy(kind = k, result = null) }
     fun setStrict(s: FilterStrictness) = _ui.update { it.copy(strict = s) }
     fun toggleBefore() = _ui.update { it.copy(showBefore = !it.showBefore) }
     fun clearMessage() = _ui.update { it.copy(message = null) }
 
     fun tryOn() {
-        val s = _ui.value; val person = s.person ?: return; val garment = s.garment ?: return
+        val s = _ui.value; val person = s.person ?: return; val garment0 = s.garment ?: return
+        // the garment only supplies texture: 1280 px is plenty and keeps memory down on full-size photos
+        val garment = scaled(garment0, 1280)
         viewModelScope.launch {
             _ui.update { it.copy(busy = "Checking photos…", error = null, message = null, result = null, showBefore = false) }
             try {

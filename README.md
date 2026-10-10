@@ -3,7 +3,7 @@
 Virtual try-on on the phone: **your photo on the left, a dress on the right, tap Try On.** Only the clothes change:
 your body shape, pose, face, hair, skin, hands and the background stay exactly as they were.
 
-- Package `com.vanu.dressup`, version 1.0 (versionCode 1), Android 7.0+, arm64-v8a / armeabi-v7a APKs (~13 MB)
+- Package `com.vanu.dressup`, version 1.0 (versionCode 1), Android 7.0+ (tested target: Android 13+), arm64-v8a / armeabi-v7a APKs (~13 MB)
 - Offline after a one-time **114 MB** model download (resumable, every file SHA-256 checked) from the
   [`models-v1` release](https://github.com/vanukrishnans-source/dress-up/releases/tag/models-v1)
   (mirrors: Collage Video's models-v1 release, Google's MediaPipe CDN)
@@ -57,3 +57,10 @@ your body shape, pose, face, hair, skin, hands and the background stay exactly a
 
 `./gradlew :app:assembleRelease` (JDK 17, Android SDK 35; signing from `keystore.properties`).
 `reference/parse_photo.py` + `TrialRunner` run the same try-on code on a desktop for the trial.
+
+## Trial
+
+![trial](docs/trial_before_after.jpg)
+
+Inputs (all CC0 / public domain, Wikimedia Commons): "Woman pink and blue dress (crop full body)",
+The Met "Dress MET DT3719" and "Dress MET DT11835", "CU 390 KEN t-shirt".

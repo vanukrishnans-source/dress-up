@@ -193,7 +193,8 @@ private fun countWord(n: Int) = when (n) { 1 -> "one model"; 2 -> "two models"; 
 
 /** First-run model download card. [extraNote] is shown under the file list (e.g. optional extras). */
 @Composable
-fun ModelSetup(m: ModelUi, specs: List<ModelSpec>, onDownload: () -> Unit, onPause: () -> Unit, extraNote: String? = null) {
+fun ModelSetup(m: ModelUi, specs: List<ModelSpec>, onDownload: () -> Unit, onPause: () -> Unit, extraNote: String? = null,
+               credits: String = "safety filter: Falconsai NSFW classifier (Apache-2.0); body pose and clothes/skin/hair parts: Google MediaPipe (Apache-2.0).") {
     val total = specs.sumOf { it.bytes }
     Card(modifier = Modifier.fillMaxWidth(), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -251,9 +252,7 @@ fun ModelSetup(m: ModelUi, specs: List<ModelSpec>, onDownload: () -> Unit, onPau
                     Text("Retry", style = MaterialTheme.typography.titleMedium) }
                 ModelPhase.READY -> {}
             }
-            Text("Every file is checked against its SHA-256 checksum before use. Models: ArcFace and inswapper (InsightFace) and " +
-                "GPEN (Alibaba DAMO), from the FaceFusion model repository — licensed for personal, non-commercial use; " +
-                "safety filter: Falconsai NSFW classifier (Apache-2.0); body pose and hair/skin/clothes parts: Google MediaPipe (Apache-2.0).",
+            Text("Every file is checked against its SHA-256 checksum before use. Models: " + credits,
                 style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }

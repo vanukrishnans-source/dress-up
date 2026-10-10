@@ -56,6 +56,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent { AppTheme { DressApp() } }
+        debugInputs(intent)
+    }
+
+    override fun onNewIntent(intent: android.content.Intent) { super.onNewIntent(intent); debugInputs(intent) }
+
+    /** Debuggable builds only: `am start ... --es person <file> --es garment <file> --es kind FULL` for emulator tests. */
+    private fun debugInputs(i: android.content.Intent?) {
+        if (i == null || (applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) == 0) return
+        val vm = androidx.lifecycle.ViewModelProvider(this)[DressViewModel::class.java]
+        i.getStringExtra("person")?.let { vm.pickFile("person", java.io.File(it)) }
+        i.getStringExtra("garment")?.let { vm.pickFile("garment", java.io.File(it)) }
+        i.getStringExtra("kind")?.let { vm.setKind(GarmentKind.valueOf(it)) }
     }
 }
 
