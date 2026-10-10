@@ -1,0 +1,4 @@
+<resources>
+    <!-- deep orange: distinct from Couple Face Swap (purple), Face Swap Video (teal) and GIF Face Swap (indigo) -->
+    <color name="ic_launcher_background">#E64A19</color>
+</resources>
